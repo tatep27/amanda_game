@@ -123,17 +123,23 @@ export class Ch1Scene extends Phaser.Scene {
   update(time: number, delta: number) {
     if (this.isPlayerDead) return;
 
-    // Update player
-    this.player.update();
+    // Check if dialogue is active to pause gameplay
+    const dialogueActive = this.dialogueBox.hasActiveDialogue();
 
-    // Update enemies
-    for (const enemy of this.enemies) {
-      enemy.update(this.player);
+    // Update player (only if dialogue not active)
+    if (!dialogueActive) {
+      this.player.update();
+    }
+
+    // Update enemies (only if dialogue not active)
+    if (!dialogueActive) {
+      for (const enemy of this.enemies) {
+        enemy.update(this.player);
+      }
     }
 
     // Check interactions (NPCs and Doors)
     const isInteractPressed = this.inputManager.isInteractJustPressed();
-    const dialogueActive = this.dialogueBox.hasActiveDialogue();
     
     if (isInteractPressed) {
       if (dialogueActive) {

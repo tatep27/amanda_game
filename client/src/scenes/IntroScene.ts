@@ -26,6 +26,7 @@ export class IntroScene extends Phaser.Scene {
   private dialogueBox!: DialogueBox;
   private interactionPrompt!: InteractionPrompt;
   private isPlayerDead: boolean = false;
+  private blackOverlay?: Phaser.GameObjects.Rectangle;
   
   private spawnId: string = 'default';
   
@@ -75,35 +76,14 @@ export class IntroScene extends Phaser.Scene {
 
     // Create enemies
     if (manifest.enemies && manifest.enemies.length > 0) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:115',message:'Creating enemies',data:{enemyCount:manifest.enemies.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-      // #endregion
       this.enemies = SceneLoader.createEnemies(this, manifest.enemies, this.player);
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:119',message:'Created enemies',data:{enemyCount:this.enemies.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-      // #endregion
     }
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:124',message:'About to setup collisions',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Setup collisions
     this.physics.add.collider(this.player, this.walls);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:129',message:'Added player-wall collider',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.physics.add.overlap(this.player, this.npcs);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:133',message:'Added player-npc overlap',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.physics.add.overlap(this.player, this.doors);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:137',message:'Added player-door overlap',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     if (this.enemies.length > 0) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:141',message:'Adding enemy collision',data:{enemyCount:this.enemies.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-      // #endregion
       this.physics.add.overlap(
         this.player,
         this.enemies,
@@ -112,99 +92,87 @@ export class IntroScene extends Phaser.Scene {
         this
       );
     }
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:151',message:'About to initialize systems',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Initialize remaining systems
     this.debugDisplay = new DebugDisplay(this, this.player);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:156',message:'Created DebugDisplay',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.debugDraw = new DebugDraw(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:160',message:'Created DebugDraw',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.dialogueBox = new DialogueBox(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:164',message:'Created DialogueBox',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.interactionPrompt = new InteractionPrompt(this);
+
+    // Create black overlay (full screen, on top of everything)
+    this.blackOverlay = this.add.rectangle(
+      0,
+      0,
+      this.cameras.main.width,
+      this.cameras.main.height,
+      0x000000,
+      1
+    );
+    this.blackOverlay.setOrigin(0, 0);
+    this.blackOverlay.setDepth(10000); // Very high depth to be on top of everything
+    this.blackOverlay.setScrollFactor(0); // Don't move with camera
 
     // Show intro message if first visit
     if (manifest.introMessage && !IntroScene.visitedScenes.has('IntroScene')) {
       IntroScene.visitedScenes.add('IntroScene');
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:174',message:'Scheduling intro message for next frame',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-      // #endregion
       // Defer intro message to next frame to ensure create() completes first
       this.time.delayedCall(100, () => {
         this.showIntroMessage(manifest.introMessage!);
       });
+    } else {
+      // If no intro message, immediately fade out the black screen
+      this.fadeOutBlackScreen();
     }
 
     // Camera follow player
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:183',message:'About to setup camera',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
     this.cameras.main.setZoom(1);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:99',message:'IntroScene create() COMPLETE',data:{showedIntro:!!manifest.introMessage},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
   }
 
-  private updateCount = 0;
+  private fadeOutBlackScreen(): void {
+    if (!this.blackOverlay) return;
+    
+    this.tweens.add({
+      targets: this.blackOverlay,
+      alpha: 0,
+      duration: 1000,
+      ease: 'Power2',
+      onComplete: () => {
+        this.blackOverlay?.destroy();
+        this.blackOverlay = undefined;
+      }
+    });
+  }
   
   update(time: number, delta: number) {
-    // #region agent log - log first 3 update calls
-    this.updateCount++;
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:212',message:'update() START',data:{updateCount:this.updateCount,time:Math.floor(time),isDead:this.isPlayerDead},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    }
-    // #endregion
     if (this.isPlayerDead) return;
 
-    // Update player
-    this.player.update();
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:224',message:'player.update() done',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    }
-    // #endregion
+    // Check if dialogue is active to pause gameplay
+    const dialogueActive = this.dialogueBox.hasActiveDialogue();
 
-    // Update enemies
-    for (const enemy of this.enemies) {
-      enemy.update(this.player);
+    // Update player (only if dialogue not active)
+    if (!dialogueActive) {
+      this.player.update();
     }
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:232',message:'enemies updated',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    }
-    // #endregion
 
-    // #region agent log - check inputManager
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:239',message:'about to check inputManager',data:{hasInputManager:!!this.inputManager,hasDialogueBox:!!this.dialogueBox},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'F'})}).catch(()=>{});
+    // Update enemies (only if dialogue not active)
+    if (!dialogueActive) {
+      for (const enemy of this.enemies) {
+        enemy.update(this.player);
+      }
     }
-    // #endregion
+
     // Check interactions (NPCs and Doors)
     const isInteractPressed = this.inputManager.isInteractJustPressed();
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:245',message:'isInteractPressed checked',data:{isInteractPressed},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'F'})}).catch(()=>{});
-    }
-    // #endregion
-    const dialogueActive = this.dialogueBox.hasActiveDialogue();
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:251',message:'dialogueActive checked',data:{dialogueActive},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'F'})}).catch(()=>{});
-    }
-    // #endregion
     if (isInteractPressed) {
       if (dialogueActive) {
         // Advance dialogue when E is pressed
-        this.dialogueBox.advance();
+        const hasMoreLines = this.dialogueBox.advance();
+        
+        // If intro dialogue just finished and black screen is still visible, fade it out
+        if (!hasMoreLines && this.blackOverlay) {
+          this.fadeOutBlackScreen();
+        }
       } else {
         // Check for NPC/door interactions when no dialogue is active
         const interacted = this.player.tryInteract([...this.npcs, ...this.doors]);
@@ -221,19 +189,9 @@ export class IntroScene extends Phaser.Scene {
         }
       }
     }
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:270',message:'interactions checked DONE',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'F'})}).catch(()=>{});
-    }
-    // #endregion
 
     // Check for nearby interactables and show prompt
     const nearbyInteractable = this.player.getNearbyInteractable([...this.npcs, ...this.doors]);
-    // #region agent log - debug interaction prompt
-    if (this.updateCount <= 5) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:280',message:'Checking nearby interactable',data:{hasNearby:!!nearbyInteractable,nearbyId:nearbyInteractable?.getInteractionId(),playerX:Math.round(this.player.x),playerY:Math.round(this.player.y),doorCount:this.doors.length,npcCount:this.npcs.length,dialogueActive},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'G'})}).catch(()=>{});
-    }
-    // #endregion
     if (nearbyInteractable && !dialogueActive) {
       const promptPos = nearbyInteractable.getPromptPosition();
       this.interactionPrompt.show(
@@ -247,11 +205,6 @@ export class IntroScene extends Phaser.Scene {
 
     // Update debug systems
     this.debugDisplay.update();
-    // #region agent log
-    if (this.updateCount <= 3) {
-      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:266',message:'debugDisplay updated',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    }
-    // #endregion
     this.debugDraw.update();
   }
 
@@ -268,20 +221,10 @@ export class IntroScene extends Phaser.Scene {
   }
 
   private showIntroMessage(message: string): void {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:246',message:'showIntroMessage START',data:{messageLength:message.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     const lines = message.split('~').map(s => s.trim()).filter(s => s.length > 0);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:250',message:'Split message into lines',data:{lineCount:lines.length,lines:lines},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.dialogueBox.showDialogue({
       characterName: '',
       lines: lines
     });
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:256',message:'Called showDialogue',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
   }
 }
-

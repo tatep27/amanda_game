@@ -103,6 +103,12 @@ export class SceneLoader {
         npcData.interactionZoneSize || 64,
         spriteKey
       );
+      
+      // Scale down custom sprites to match player scale
+      if (spriteKey !== 'npc-placeholder') {
+        npc.setScale(1 / 50);
+      }
+      
       createdNpcs.push(npc);
     }
     

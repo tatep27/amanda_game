@@ -76,7 +76,7 @@ export class DialogueBox {
       this.dialogueText,
       this.continueText,
     ]);
-    this.container.setDepth(2000); // Above everything else
+    this.container.setDepth(11000); // Above black overlay (which is 10000)
     this.container.setScrollFactor(0); // Keep anchored to screen, not world
     this.container.setVisible(false);
 

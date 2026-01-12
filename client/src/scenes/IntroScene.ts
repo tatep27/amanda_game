@@ -176,15 +176,17 @@ export class IntroScene extends Phaser.Scene {
         // Check for NPC/door interactions when no dialogue is active
         const interacted = this.player.tryInteract([...this.npcs, ...this.doors]);
         
-        if (interacted && interacted.constructor.name === 'Door') {
-          const door = interacted as Door;
-          const toSceneKey = door.getToSceneKey();
-          const toSpawnId = door.getToSpawnId();
+        if (interacted instanceof Door) {
+          const toSceneKey = interacted.getToSceneKey();
+          const toSpawnId = interacted.getToSpawnId();
           console.log(`[IntroScene] Transitioning to ${toSceneKey} at spawn ${toSpawnId}`);
           this.scene.start(toSceneKey, { 
             spawnId: toSpawnId,
             previousScene: 'IntroScene'
           });
+        } else if (interacted instanceof Npc) {
+          const dialogue = interacted.getDialogue();
+          this.dialogueBox.showDialogue(dialogue);
         }
       }
     }

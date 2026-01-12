@@ -37,6 +37,7 @@ export class Ch1Scene extends Phaser.Scene {
 
   init(data: { spawnId?: string; previousScene?: string }) {
     this.spawnId = data.spawnId || 'default';
+    this.isPlayerDead = false; // Reset death flag on scene init
     console.log(`[Ch1Scene] init with spawn: ${this.spawnId}`);
   }
 
@@ -189,7 +190,6 @@ export class Ch1Scene extends Phaser.Scene {
     
     this.time.delayedCall(100, () => {
       this.scene.restart({ spawnId: this.spawnId });
-      this.isPlayerDead = false;
     });
   }
 

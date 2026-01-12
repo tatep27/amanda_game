@@ -79,9 +79,10 @@ export class PreloadScene extends Phaser.Scene {
         // #region agent log
         fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PreloadScene.ts:62',message:'Registry has sprites',data:{spriteCount:Object.keys(registry.sprites).length,sprites:Object.keys(registry.sprites)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
         // #endregion
+        console.log('[PreloadScene] Sprite registry loaded:', registry.sprites);
         Object.entries(registry.sprites).forEach(([spriteKey, filename]) => {
           this.load.image(spriteKey, `/assets/sprites/${filename}`);
-          console.log(`[PreloadScene] Loading sprite: ${spriteKey} -> ${filename}`);
+          console.log(`[PreloadScene] Queueing sprite: ${spriteKey} -> /assets/sprites/${filename}`);
         });
         
         // Create animation AFTER the dynamically loaded sprites finish loading

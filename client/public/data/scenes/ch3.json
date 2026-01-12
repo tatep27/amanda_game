@@ -1,6 +1,6 @@
 {
-  "sceneKey": "ch2",
-  "name": "Ch2",
+  "sceneKey": "ch3",
+  "name": "Ch3",
   "backgroundColor": "0x2a2a4e",
   "introMessage": null,
   "spawns": [
@@ -36,7 +36,7 @@
     {
       "x": 736,
       "y": 304,
-      "toSceneKey": "ch3",
+      "toSceneKey": "ch4",
       "toSpawnId": "default",
       "promptText": "Press E to enter ch3"
     }

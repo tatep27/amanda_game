@@ -68,14 +68,18 @@ export class SceneLoader {
 
   /**
    * Create NPCs from manifest data
-   * Loads dialogues from cache
+   * Loads dialogues from cache (checks scene-specific dialogues first, then global)
    */
   static createNpcs(
     scene: Phaser.Scene,
     npcs: NpcData[]
   ): Npc[] {
     const createdNpcs: Npc[] = [];
-    const dialogues = scene.cache.json.get('dialogues');
+    const globalDialogues = scene.cache.json.get('dialogues');
+    
+    // Try to get scene-specific dialogues (e.g., 'ch1_dialogues', 'ch4_dialogues')
+    const sceneKey = scene.scene.key;
+    const sceneDialogues = scene.cache.json.get(`${sceneKey}_dialogues`);
     
     for (const npcData of npcs) {
       if (!npcData.dialogueId) {
@@ -83,9 +87,10 @@ export class SceneLoader {
         continue;
       }
       
-      const dialogue = dialogues?.[npcData.dialogueId];
+      // Check scene-specific dialogues first, then global dialogues
+      const dialogue = sceneDialogues?.[npcData.dialogueId] || globalDialogues?.[npcData.dialogueId];
       if (!dialogue) {
-        console.warn(`[SceneLoader] Dialogue not found: ${npcData.dialogueId}`);
+        console.warn(`[SceneLoader] Dialogue not found: ${npcData.dialogueId} (checked ${sceneKey}_dialogues and dialogues)`);
         continue;
       }
       

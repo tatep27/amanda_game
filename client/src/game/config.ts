@@ -4,6 +4,8 @@ import { PreloadScene } from '@/scenes/PreloadScene';
 import { IntroScene } from '@/scenes/IntroScene';
 import { Ch1Scene } from '@/scenes/Ch1Scene';
 import { Ch2Scene } from '@/scenes/Ch2Scene';
+import { Ch3Scene } from '@/scenes/Ch3Scene';
+import { Ch4Scene } from '@/scenes/Ch4Scene';
 
 export const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -18,7 +20,7 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
       debug: false,
     },
   },
-  scene: [BootScene, PreloadScene, IntroScene, Ch1Scene, Ch2Scene],
+  scene: [BootScene, PreloadScene, IntroScene, Ch1Scene, Ch2Scene, Ch3Scene, Ch4Scene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

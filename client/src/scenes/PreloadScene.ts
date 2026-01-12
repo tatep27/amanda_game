@@ -35,6 +35,8 @@ export class PreloadScene extends Phaser.Scene {
     this.load.json('introscene', 'data/scenes/introscene.json');
     this.load.json('ch1', 'data/scenes/ch1.json');
     this.load.json('ch2', 'data/scenes/ch2.json');
+    this.load.json('ch3', 'data/scenes/ch3.json');
+    this.load.json('ch4', 'data/scenes/ch4.json');
     // #region agent log
     fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PreloadScene.ts:29',message:'Queued introscene.json load',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
     // #endregion
@@ -42,6 +44,7 @@ export class PreloadScene extends Phaser.Scene {
     // Load dialogue data
     this.load.json('dialogues', 'data/dialogues.json');
     this.load.json('ch1_dialogues', 'data/scenes/ch1_dialogues.json');
+    this.load.json('ch4_dialogues', 'data/scenes/ch4_dialogues.json');
     // #region agent log
     fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PreloadScene.ts:32',message:'Queued dialogues.json load',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
     // #endregion

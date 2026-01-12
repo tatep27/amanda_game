@@ -157,8 +157,8 @@ export class SceneLoader {
         enemyData.spriteKey
       );
       
-      // Scale down enemy sprites (40% smaller, like NPCs)
-      enemy.setScale(0.6);
+      // Scale down enemy sprites by 1/40
+      enemy.setScale(1 / 40);
       
       createdEnemies.push(enemy);
     }

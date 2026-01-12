@@ -1,0 +1,57 @@
+{
+  "sceneKey": "IntroScene",
+  "name": "Intro",
+  "backgroundColor": "0x3b3b3b",
+  "introMessage": "ZZZZZ..... ZZZZZZ~Its the day after you said good bye to your boyfriend. You are fast asleep~ZZZZZZ....ZZZZZ~*WOOSH*~Suddenly you awake, startled by the sound of a rush of wind. Only something is off...~You awake, only to find yourself in the body of a strange form...~use the arrow keys to move.",
+  "spawns": [
+    {
+      "id": "spawn_1",
+      "x": 416,
+      "y": 496,
+      "facing": "down"
+    }
+  ],
+  "walls": [
+    {
+      "x": 0,
+      "y": 160,
+      "width": 320,
+      "height": 448
+    },
+    {
+      "x": 544,
+      "y": 0,
+      "width": 256,
+      "height": 592
+    },
+    {
+      "x": 320,
+      "y": 560,
+      "width": 224,
+      "height": 32
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "width": 544,
+      "height": 16
+    },
+    {
+      "x": 0,
+      "y": 16,
+      "width": 16,
+      "height": 144
+    }
+  ],
+  "npcs": [],
+  "doors": [
+    {
+      "x": 144,
+      "y": 64,
+      "toSceneKey": "ch1",
+      "toSpawnId": "default",
+      "promptText": "Press E to enter ch1"
+    }
+  ],
+  "enemies": []
+}

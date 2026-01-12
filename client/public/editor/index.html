@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scene Editor - Amanda Game</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Scene Editor</h1>
+      <div class="scene-selector">
+        <label for="scene-select">Scene:</label>
+        <select id="scene-select">
+          <option value="">-- New Scene --</option>
+          <option value="VillageScene">VillageScene</option>
+          <option value="ForestScene">ForestScene</option>
+        </select>
+        <button id="load-scene">Load</button>
+        <button id="new-scene">New</button>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="canvas-container">
+        <canvas id="editor-canvas" width="800" height="600"></canvas>
+        <div class="canvas-info">
+          <span id="mouse-pos">Mouse: (0, 0)</span>
+          <span id="grid-snap">Grid Snap: ON</span>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="toolbar">
+          <h3>Tools</h3>
+          <button class="tool-btn active" data-tool="select">Select</button>
+          <button class="tool-btn" data-tool="wall">Wall</button>
+          <button class="tool-btn" data-tool="npc">NPC</button>
+          <button class="tool-btn" data-tool="enemy">Enemy</button>
+          <button class="tool-btn" data-tool="door">Door</button>
+          <button class="tool-btn" data-tool="spawn">Spawn</button>
+          <button class="tool-btn delete-tool" data-tool="delete">Delete</button>
+        </div>
+
+        <div class="properties-panel">
+          <h3>Properties</h3>
+          <div id="properties-content">
+            <p class="hint">Select an entity to edit properties</p>
+          </div>
+        </div>
+
+        <div class="scene-properties">
+          <h3>Scene Settings</h3>
+          <div class="form-group">
+            <label for="scene-key">Scene Key:</label>
+            <input type="text" id="scene-key" placeholder="MyScene">
+          </div>
+          <div class="form-group">
+            <label for="scene-name">Scene Name:</label>
+            <input type="text" id="scene-name" placeholder="My Scene">
+          </div>
+          <div class="form-group">
+            <label for="bg-color">Background Color:</label>
+            <input type="color" id="bg-color" value="#2a2a4e">
+          </div>
+          <div class="form-group">
+            <label for="intro-message">Intro Message (optional):</label>
+            <textarea id="intro-message" placeholder="Welcome message shown on first visit... Use ~ for page breaks" style="min-height: 80px;"></textarea>
+            <small id="intro-message-info" style="color: #a0a0a0;">0 characters, 0 pages</small>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="export-json" class="primary-btn">Export JSON</button>
+          <button id="import-json" class="secondary-btn">Import JSON</button>
+          <input type="file" id="file-input" accept=".json" style="display: none;">
+          <button id="clear-canvas" class="danger-btn">Clear All</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="editor.js"></script>
+</body>
+</html>
+

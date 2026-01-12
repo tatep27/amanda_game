@@ -1,0 +1,78 @@
+{
+  "sceneKey": "ch1",
+  "name": "Ch1",
+  "backgroundColor": "0x3b3b3b",
+  "introMessage": "~*Woosh* You try to open your eyes but realize they are already open...~What is this place?~Where is your body?",
+  "spawns": [
+    {
+      "id": "default",
+      "x": 112,
+      "y": 80,
+      "facing": "right"
+    }
+  ],
+  "walls": [
+    {
+      "x": 48,
+      "y": 0,
+      "width": 720,
+      "height": 32
+    },
+    {
+      "x": 48,
+      "y": 32,
+      "width": 32,
+      "height": 208
+    },
+    {
+      "x": 48,
+      "y": 240,
+      "width": 336,
+      "height": 32
+    },
+    {
+      "x": 384,
+      "y": 240,
+      "width": 32,
+      "height": 320
+    },
+    {
+      "x": 736,
+      "y": 32,
+      "width": 32,
+      "height": 512
+    },
+    {
+      "x": 432,
+      "y": 528,
+      "width": 304,
+      "height": 32
+    },
+    {
+      "x": 416,
+      "y": 528,
+      "width": 16,
+      "height": 32
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tate",
+      "x": 496,
+      "y": 416,
+      "spriteKey": "tate",
+      "dialogueId": "tate_dialogue",
+      "interactionZoneSize": 64
+    }
+  ],
+  "doors": [
+    {
+      "x": 672,
+      "y": 480,
+      "toSceneKey": "ch2",
+      "toSpawnId": "default",
+      "promptText": "Press E to enter ch2"
+    }
+  ],
+  "enemies": []
+}

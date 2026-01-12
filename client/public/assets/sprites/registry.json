@@ -1,0 +1,9 @@
+{
+  "comment": "Sprite registry: maps spriteKey to filename for dynamic loading",
+  "sprites": {
+    "player_starting": "player_starting.png",
+    "player_mouth_starting": "player_mouth_talking.png",
+    "player_mouth_still": "player_mouth_still.png"
+  }
+}
+

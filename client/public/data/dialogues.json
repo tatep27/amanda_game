@@ -1,0 +1,35 @@
+{
+  "elder_intro": {
+    "characterName": "Village Elder",
+    "lines": [
+      "Welcome to our village, traveler!",
+      "We are peaceful folk who live in harmony with nature.",
+      "The forest to the south is... mysterious."
+    ]
+  },
+  "stranger_intro": {
+    "characterName": "Mysterious Stranger",
+    "lines": [
+      "...",
+      "You sense a powerful presence nearby.",
+      "Perhaps we will meet again..."
+    ]
+  },
+  "shopkeeper_intro": {
+    "characterName": "Shopkeeper",
+    "lines": [
+      "Hello! Would you like to buy something?",
+      "Oh wait, the shop is not ready yet!",
+      "Come back in Phase 5!"
+    ]
+  },
+  "hermit_intro": {
+    "characterName": "Forest Hermit",
+    "lines": [
+      "Ah, a visitor! How rare...",
+      "I have lived in this forest for many years.",
+      "The trees whisper secrets to those who listen."
+    ]
+  }
+}
+

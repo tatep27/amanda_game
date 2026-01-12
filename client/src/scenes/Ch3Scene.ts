@@ -38,7 +38,7 @@ export class Ch3Scene extends Phaser.Scene {
   init(data: { spawnId?: string; previousScene?: string }) {
     this.spawnId = data.spawnId || 'default';
     this.isPlayerDead = false; // Reset death flag on scene init
-    console.log(`[Ch3Scene] init with spawn: ${this.spawnId}`);
+    console.log(`[Ch3Scene] init with spawn: ${this.spawnId}, previousScene: ${data.previousScene}`);
   }
 
   create() {
@@ -48,6 +48,8 @@ export class Ch3Scene extends Phaser.Scene {
       console.error('[Ch3Scene] Failed to load ch3.json');
       return;
     }
+
+    console.log('[Ch3Scene] Loaded manifest:', manifest.sceneKey, manifest.name);
 
     // Set background
     this.cameras.main.setBackgroundColor(manifest.backgroundColor || '#000000');

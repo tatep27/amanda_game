@@ -9,7 +9,7 @@ export class DebugDisplay {
   private scene: Phaser.Scene;
   private player: Player;
   private debugText!: Phaser.GameObjects.Text;
-  private enabled: boolean = true;
+  private enabled: boolean = false;
 
   constructor(scene: Phaser.Scene, player: Player) {
     this.scene = scene;

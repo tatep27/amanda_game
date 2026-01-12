@@ -66,7 +66,7 @@
       "id": "tate",
       "x": 608,
       "y": 272,
-      "spriteKey": "npc-placeholder",
+      "spriteKey": "tate",
       "dialogueId": "tate_dialogue",
       "interactionZoneSize": 64
     }

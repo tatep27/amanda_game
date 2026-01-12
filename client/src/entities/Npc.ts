@@ -83,6 +83,13 @@ export class Npc implements Interactable {
     };
   }
 
+  getPosition(): { x: number; y: number } {
+    return {
+      x: this.npcX,
+      y: this.npcY,
+    };
+  }
+
   setScale(scale: number): void {
     this.sprite.setScale(scale);
   }

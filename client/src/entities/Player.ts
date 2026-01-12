@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Direction, MovementInput, Velocity } from '@/types';
 import { InputManager } from '@/engine/InputManager';
 import { GameState } from '@/systems/GameState';
+import { Interactable } from '@/interfaces/Interactable';
 
 /**
  * Player character with movement, facing direction, and animation
@@ -236,7 +237,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const INTERACTION_RANGE = 64;
     
     for (const interactable of interactables) {
-      const position = interactable.getPromptPosition();
+      const position = interactable.getPosition();
       const distance = Phaser.Math.Distance.Between(
         this.x,
         this.y,

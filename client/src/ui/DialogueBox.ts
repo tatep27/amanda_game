@@ -77,6 +77,7 @@ export class DialogueBox {
       this.continueText,
     ]);
     this.container.setDepth(2000); // Above everything else
+    this.container.setScrollFactor(0); // Keep anchored to screen, not world
     this.container.setVisible(false);
 
     console.log('[DialogueBox] Created');

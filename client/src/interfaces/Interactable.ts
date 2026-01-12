@@ -30,5 +30,17 @@ export interface Interactable {
    * @returns Interaction ID string
    */
   getInteractionId(): string;
+
+  /**
+   * Get the position where the prompt should be displayed
+   * @returns {x, y} coordinates for the prompt
+   */
+  getPromptPosition(): { x: number; y: number };
+
+  /**
+   * Get the actual position of the interactable (for distance checks)
+   * @returns {x, y} coordinates of the entity
+   */
+  getPosition(): { x: number; y: number };
 }
 

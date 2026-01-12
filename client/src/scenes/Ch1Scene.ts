@@ -71,31 +71,8 @@ export class Ch1Scene extends Phaser.Scene {
     // Create walls
     this.walls = SceneLoader.createWalls(this, manifest.walls);
 
-    // Create NPCs with 60% scale (40% reduction)
-    const ch1Dialogues = this.cache.json.get('ch1_dialogues');
-    this.npcs = manifest.npcs.map(npcData => {
-      const dialogue = ch1Dialogues?.[npcData.dialogueId];
-      if (!dialogue) {
-        console.warn(`[Ch1Scene] Dialogue not found: ${npcData.dialogueId}`);
-        return null;
-      }
-      
-      const spriteKey = npcData.spriteKey && this.textures.exists(npcData.spriteKey) 
-        ? npcData.spriteKey 
-        : 'npc-placeholder';
-      
-      const npc = new Npc(
-        this,
-        npcData.x,
-        npcData.y,
-        npcData.id,
-        dialogue,
-        npcData.interactionZoneSize || 64,
-        spriteKey
-      );
-      npc.setScale(0.6);
-      return npc;
-    }).filter(npc => npc !== null) as Npc[];
+    // Create NPCs using SceneLoader (handles scaling automatically)
+    this.npcs = SceneLoader.createNpcs(this, manifest.npcs);
 
     // Create doors
     this.doors = manifest.doors.map(doorData => {
@@ -188,9 +165,11 @@ export class Ch1Scene extends Phaser.Scene {
     // Check for nearby interactables and show prompt
     const nearbyInteractable = this.player.getNearbyInteractable([...this.npcs, ...this.doors]);
     if (nearbyInteractable && !dialogueActive) {
+      const promptPos = nearbyInteractable.getPromptPosition();
       this.interactionPrompt.show(
-        nearbyInteractable.getPromptText(),
-        nearbyInteractable.getPromptPosition()
+        promptPos.x,
+        promptPos.y,
+        nearbyInteractable.getPromptText()
       );
     } else {
       this.interactionPrompt.hide();

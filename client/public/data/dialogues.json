@@ -30,6 +30,16 @@
       "I have lived in this forest for many years.",
       "The trees whisper secrets to those who listen."
     ]
+  },
+  "tate_dialogue": {
+    "characterName": "Tate",
+    "lines": [
+      "Hello amanda.",
+      "Its me, your boyfriend...",
+      "Only now, we exist together. I was tired of doing long distance so I downloaded ourselves into this virtual world where we can always be together.",
+      "Only... you came out looking strange.",
+      "Uh... we will need to fix you. But don't worry, I know just the thing. It's right through this door. Just look out for the [CHEESE]! You will still poop yourself in here..."
+    ]
   }
 }
 

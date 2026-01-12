@@ -34,92 +34,44 @@ export class IntroScene extends Phaser.Scene {
 
   constructor() {
     super({ key: 'IntroScene' });
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:32',message:'IntroScene constructor',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
   }
 
   init(data: { spawnId?: string; previousScene?: string }) {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:37',message:'IntroScene init()',data:{spawnId:data.spawnId,previousScene:data.previousScene},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     this.spawnId = data.spawnId || 'spawn_1';
     console.log(`[IntroScene] init with spawn: ${this.spawnId}`);
   }
 
   create() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:44',message:'IntroScene create() START',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     // Load scene manifest
     const manifest: SceneManifest = this.cache.json.get('introscene');
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:47',message:'Loaded manifest from cache',data:{hasManifest:!!manifest,sceneKey:manifest?.sceneKey},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     
     // Set background color
     this.cameras.main.setBackgroundColor(manifest.backgroundColor || 0x3b3b3b);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:59',message:'Set background color',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     
     // Create placeholder textures
     PlaceholderGraphics.createWallTexture(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:62',message:'Created Wall texture',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     PlaceholderGraphics.createNpcTexture(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:65',message:'Created NPC texture',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     PlaceholderGraphics.createEnemyTexture(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:69',message:'Created Enemy texture',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     PlaceholderGraphics.createDoorTexture(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:72',message:'Created Door texture',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Find spawn point
     const spawn = manifest.spawns.find(s => s.id === this.spawnId) || manifest.spawns[0];
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:74',message:'Found spawn point',data:{spawnId:spawn.id,x:spawn.x,y:spawn.y},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     
     // Initialize InputManager FIRST (Player needs it in constructor)
     this.inputManager = new InputManager(this);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:79',message:'Created InputManager',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     
     // Create player
     this.player = new Player(this, spawn.x, spawn.y, this.inputManager);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:84',message:'Created Player',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     // Note: Player facing direction is managed internally, spawn.facing is not used
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:89',message:'Player setup complete',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Create walls
     this.walls = SceneLoader.createWalls(this, manifest.walls);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:94',message:'Created walls',data:{wallCount:this.walls.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Create NPCs
     this.npcs = SceneLoader.createNpcs(this, manifest.npcs);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:99',message:'Created NPCs',data:{npcCount:this.npcs.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Create doors
     this.doors = SceneLoader.createDoors(this, manifest.doors);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:104',message:'Created doors',data:{doorCount:this.doors.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
 
     // Create enemies
     if (manifest.enemies && manifest.enemies.length > 0) {
@@ -277,10 +229,17 @@ export class IntroScene extends Phaser.Scene {
 
     // Check for nearby interactables and show prompt
     const nearbyInteractable = this.player.getNearbyInteractable([...this.npcs, ...this.doors]);
+    // #region agent log - debug interaction prompt
+    if (this.updateCount <= 5) {
+      fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'IntroScene.ts:280',message:'Checking nearby interactable',data:{hasNearby:!!nearbyInteractable,nearbyId:nearbyInteractable?.getInteractionId(),playerX:Math.round(this.player.x),playerY:Math.round(this.player.y),doorCount:this.doors.length,npcCount:this.npcs.length,dialogueActive},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'G'})}).catch(()=>{});
+    }
+    // #endregion
     if (nearbyInteractable && !dialogueActive) {
+      const promptPos = nearbyInteractable.getPromptPosition();
       this.interactionPrompt.show(
-        nearbyInteractable.getPromptText(),
-        nearbyInteractable.getPromptPosition()
+        promptPos.x,
+        promptPos.y,
+        nearbyInteractable.getPromptText()
       );
     } else {
       this.interactionPrompt.hide();

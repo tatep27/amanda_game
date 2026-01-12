@@ -26,7 +26,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     spriteKey: string = 'enemy-placeholder'
   ) {
     // Use actual sprite if available, fallback to placeholder
-    const textureKey = scene.textures.exists(spriteKey) ? spriteKey : 'enemy-placeholder';
+    const spriteExists = scene.textures.exists(spriteKey);
+    const textureKey = spriteExists ? spriteKey : 'enemy-placeholder';
+    console.log(`[Enemy] Constructor: spriteKey="${spriteKey}", exists=${spriteExists}, using="${textureKey}"`);
     super(scene, x, y, textureKey);
 
     this.enemyId = id;
@@ -50,7 +52,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       body.moves = false;
     }
 
-    console.log(`[Enemy] Created "${id}" (${behavior}) at (${x}, ${y})`);
+    console.log(`[Enemy] Created "${id}" (${behavior}) at (${x}, ${y}) with texture "${textureKey}"`);
   }
 
   /**

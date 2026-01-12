@@ -142,7 +142,7 @@ export class SceneLoader {
   /**
    * Create enemies from manifest data
    */
-  static createEnemies(scene: Phaser.Scene, enemies: EnemyData[], player: Player): Enemy[] {
+  static createEnemies(scene: Phaser.Scene, enemies: EnemyData[], _player: Player): Enemy[] {
     const createdEnemies: Enemy[] = [];
     
     for (const enemyData of enemies) {

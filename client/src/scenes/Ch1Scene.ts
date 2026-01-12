@@ -11,8 +11,7 @@ import { DebugDraw } from '../engine/DebugDraw';
 import { PlaceholderGraphics } from '../engine/PlaceholderGraphics';
 import { DialogueBox } from '../ui/DialogueBox';
 import { InteractionPrompt } from '../ui/InteractionPrompt';
-import { GameState } from '../systems/GameState';
-import { SceneManifest, EnemyData } from '../types';
+import { SceneManifest } from '../types';
 
 export class Ch1Scene extends Phaser.Scene {
   private player!: Player;
@@ -75,20 +74,16 @@ export class Ch1Scene extends Phaser.Scene {
     this.npcs = SceneLoader.createNpcs(this, manifest.npcs);
 
     // Create doors
-    this.doors = manifest.doors.map(doorData => {
-      const door = new Door(this, doorData.x, doorData.y, doorData.toSceneKey, doorData.toSpawnId, doorData.promptText);
-      return door;
-    });
+    this.doors = SceneLoader.createDoors(this, manifest.doors);
 
     // Create enemies
     if (manifest.enemies && manifest.enemies.length > 0) {
-      this.enemies = SceneLoader.createEnemies(this, manifest.enemies);
+      this.enemies = SceneLoader.createEnemies(this, manifest.enemies, this.player);
     }
 
     // Setup physics collisions
     this.physics.add.collider(this.player, this.walls);
-    this.physics.add.overlap(this.player, this.npcs);
-    this.physics.add.overlap(this.player, this.doors);
+    // NPC and Door overlaps are handled via player.getNearbyInteractable() distance checks
 
     // Setup enemy collisions if any enemies exist
     if (this.enemies.length > 0) {
@@ -120,7 +115,7 @@ export class Ch1Scene extends Phaser.Scene {
     this.cameras.main.setZoom(1);
   }
 
-  update(time: number, delta: number) {
+  update(_time: number, _delta: number) {
     if (this.isPlayerDead) return;
 
     // Check if dialogue is active to pause gameplay

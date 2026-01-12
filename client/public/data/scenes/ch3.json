@@ -1,0 +1,82 @@
+{
+  "sceneKey": "NewScene",
+  "name": "New Scene",
+  "backgroundColor": "0x2a2a4e",
+  "introMessage": null,
+  "spawns": [
+    {
+      "id": "default",
+      "x": 112,
+      "y": 288,
+      "facing": "right"
+    }
+  ],
+  "walls": [
+    {
+      "x": 16,
+      "y": 96,
+      "width": 32,
+      "height": 432
+    },
+    {
+      "x": 64,
+      "y": 96,
+      "width": 720,
+      "height": 16
+    },
+    {
+      "x": 64,
+      "y": 496,
+      "width": 704,
+      "height": 32
+    }
+  ],
+  "npcs": [],
+  "doors": [
+    {
+      "x": 736,
+      "y": 304,
+      "toSceneKey": "ch3",
+      "toSpawnId": "default",
+      "promptText": "Press E to enter ch3"
+    }
+  ],
+  "enemies": [
+    {
+      "id": "cheese_1",
+      "x": 288,
+      "y": 128,
+      "spriteKey": "cheese",
+      "behavior": "patrol",
+      "speed": 50,
+      "patrol": {
+        "a": {
+          "x": 288,
+          "y": 128
+        },
+        "b": {
+          "x": 288,
+          "y": 464
+        }
+      }
+    },
+    {
+      "id": "cheese_2",
+      "x": 496,
+      "y": 128,
+      "spriteKey": "cheese",
+      "behavior": "patrol",
+      "speed": 40,
+      "patrol": {
+        "a": {
+          "x": 496,
+          "y": 128
+        },
+        "b": {
+          "x": 480,
+          "y": 448
+        }
+      }
+    }
+  ]
+}

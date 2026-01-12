@@ -11,8 +11,7 @@ import { DebugDraw } from '../engine/DebugDraw';
 import { PlaceholderGraphics } from '../engine/PlaceholderGraphics';
 import { DialogueBox } from '../ui/DialogueBox';
 import { InteractionPrompt } from '../ui/InteractionPrompt';
-import { GameState } from '../systems/GameState';
-import { SceneManifest, EnemyData } from '../types';
+import { SceneManifest } from '../types';
 
 export class IntroScene extends Phaser.Scene {
   private player!: Player;
@@ -81,8 +80,7 @@ export class IntroScene extends Phaser.Scene {
 
     // Setup collisions
     this.physics.add.collider(this.player, this.walls);
-    this.physics.add.overlap(this.player, this.npcs);
-    this.physics.add.overlap(this.player, this.doors);
+    // NPC and Door overlaps are handled via player.getNearbyInteractable() distance checks
     if (this.enemies.length > 0) {
       this.physics.add.overlap(
         this.player,
@@ -144,7 +142,7 @@ export class IntroScene extends Phaser.Scene {
     });
   }
   
-  update(time: number, delta: number) {
+  update(_time: number, _delta: number) {
     if (this.isPlayerDead) return;
 
     // Check if dialogue is active to pause gameplay

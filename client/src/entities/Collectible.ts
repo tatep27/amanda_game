@@ -57,7 +57,7 @@ export class Collectible extends Phaser.Physics.Arcade.Sprite implements Interac
   /**
    * Check if this collectible can be interacted with right now
    */
-  canInteract(player: Player): boolean {
+  canInteract(_player: Player): boolean {
     return !this.isCollected;
   }
 
@@ -98,6 +98,26 @@ export class Collectible extends Phaser.Physics.Arcade.Sprite implements Interac
    */
   getInteractionId(): string {
     return this.collectibleId;
+  }
+
+  /**
+   * Get the position where the prompt should be displayed (above the collectible)
+   */
+  getPromptPosition(): { x: number; y: number } {
+    return {
+      x: this.x,
+      y: this.y - 30,
+    };
+  }
+
+  /**
+   * Get the actual position of the collectible
+   */
+  getPosition(): { x: number; y: number } {
+    return {
+      x: this.x,
+      y: this.y,
+    };
   }
 }
 

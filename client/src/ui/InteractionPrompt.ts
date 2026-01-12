@@ -9,8 +9,8 @@ export class InteractionPrompt {
   private container: Phaser.GameObjects.Container;
   private background!: Phaser.GameObjects.Rectangle;
   private text!: Phaser.GameObjects.Text;
-  private targetX: number = 0;
-  private targetY: number = 0;
+  private _targetX: number = 0;
+  private _targetY: number = 0;
   private isShowing: boolean = false;
 
   constructor(scene: Phaser.Scene) {
@@ -64,8 +64,8 @@ export class InteractionPrompt {
     if (this.isShowing) return;
     
     this.isShowing = true;
-    this.targetX = x;
-    this.targetY = y;
+    this._targetX = x;
+    this._targetY = y;
 
     // Rebuild with new text
     this.rebuildPrompt(promptText);
@@ -103,8 +103,8 @@ export class InteractionPrompt {
   }
 
   setPosition(x: number, y: number): void {
-    this.targetX = x;
-    this.targetY = y;
+    this._targetX = x;
+    this._targetY = y;
     this.container.setPosition(x, y);
   }
 

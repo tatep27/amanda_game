@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SceneManifest, SpawnPoint, ObstacleData, NpcData, DoorData, Direction, DialogueData, EnemyData, CollectibleData } from '@/types';
+import { SceneManifest, SpawnPoint, ObstacleData, NpcData, DoorData, EnemyData, CollectibleData } from '@/types';
 import { Wall } from '@/entities/Wall';
 import { Npc } from '@/entities/Npc';
 import { Door } from '@/entities/Door';
@@ -146,7 +146,6 @@ export class SceneLoader {
     const createdEnemies: Enemy[] = [];
     
     for (const enemyData of enemies) {
-      const spriteKey = enemyData.spriteKey || 'enemy-placeholder';
       const enemy = new Enemy(
         scene,
         enemyData,
@@ -165,7 +164,7 @@ export class SceneLoader {
   static createCollectibles(
     scene: Phaser.Scene,
     collectiblesData: CollectibleData[] | undefined,
-    player: Player
+    _player: Player
   ): Collectible[] {
     if (!collectiblesData) return [];
     

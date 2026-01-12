@@ -8,7 +8,7 @@ import { DialogueData } from '@/types';
  * Simplified: just sprite with separate zone
  */
 export class Npc implements Interactable {
-  private scene: Phaser.Scene;
+  private _scene: Phaser.Scene;
   private interactionId: string;
   private sprite: Phaser.GameObjects.Sprite;
   private interactionZone: Phaser.GameObjects.Zone;
@@ -27,7 +27,7 @@ export class Npc implements Interactable {
     zoneSize: number = 64,
     spriteKey: string = 'npc-placeholder'
   ) {
-    this.scene = scene;
+    this._scene = scene;
     this.interactionId = interactionId;
     this.dialogue = dialogue;
     this.npcX = x;
@@ -56,11 +56,11 @@ export class Npc implements Interactable {
     return this.promptText;
   }
 
-  canInteract(player: Player): boolean {
+  canInteract(_player: Player): boolean {
     return true;
   }
 
-  interact(player: Player): void {
+  interact(_player: Player): void {
     console.log(`[NPC] ${this.interactionId} interacted`);
   }
 

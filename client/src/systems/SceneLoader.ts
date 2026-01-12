@@ -148,9 +148,18 @@ export class SceneLoader {
     for (const enemyData of enemies) {
       const enemy = new Enemy(
         scene,
-        enemyData,
-        player
+        enemyData.x,
+        enemyData.y,
+        enemyData.id,
+        enemyData.behavior,
+        enemyData.speed,
+        enemyData.patrol,
+        enemyData.spriteKey
       );
+      
+      // Scale down enemy sprites (40% smaller, like NPCs)
+      enemy.setScale(0.6);
+      
       createdEnemies.push(enemy);
     }
     

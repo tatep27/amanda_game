@@ -34,6 +34,7 @@ export class PreloadScene extends Phaser.Scene {
     // Load scene manifests
     this.load.json('introscene', 'data/scenes/introscene.json');
     this.load.json('ch1', 'data/scenes/ch1.json');
+    this.load.json('ch2', 'data/scenes/ch2.json');
     // #region agent log
     fetch('http://127.0.0.1:7244/ingest/3dc239ea-6447-4119-bff1-3f5a1ef9df71',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PreloadScene.ts:29',message:'Queued introscene.json load',data:{},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
     // #endregion

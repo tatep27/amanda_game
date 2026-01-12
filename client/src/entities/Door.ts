@@ -7,9 +7,7 @@ import { Player } from '@/entities/Player';
  * Simple sprite with transition metadata
  */
 export class Door implements Interactable {
-  private _scene: Phaser.Scene;
   private interactionId: string;
-  private _sprite: Phaser.GameObjects.Sprite;
   private doorX: number;
   private doorY: number;
   private toSceneKey: string;
@@ -25,7 +23,6 @@ export class Door implements Interactable {
     toSpawnId: string,
     promptText: string = 'Press E to enter'
   ) {
-    this._scene = scene;
     this.interactionId = interactionId;
     this.doorX = x;
     this.doorY = y;
@@ -33,8 +30,8 @@ export class Door implements Interactable {
     this.toSpawnId = toSpawnId;
     this.promptText = promptText;
 
-    // Create door sprite
-    this._sprite = scene.add.sprite(x, y, 'door-placeholder');
+    // Create door sprite (not stored as we don't need to reference it)
+    scene.add.sprite(x, y, 'door-placeholder');
 
     console.log(`[Door] Created "${interactionId}" at (${x}, ${y}) -> ${toSceneKey}:${toSpawnId}`);
   }

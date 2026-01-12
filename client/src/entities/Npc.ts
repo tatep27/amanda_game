@@ -8,7 +8,6 @@ import { DialogueData } from '@/types';
  * Simplified: just sprite with separate zone
  */
 export class Npc implements Interactable {
-  private _scene: Phaser.Scene;
   private interactionId: string;
   private sprite: Phaser.GameObjects.Sprite;
   private interactionZone: Phaser.GameObjects.Zone;
@@ -27,7 +26,6 @@ export class Npc implements Interactable {
     zoneSize: number = 64,
     spriteKey: string = 'npc-placeholder'
   ) {
-    this._scene = scene;
     this.interactionId = interactionId;
     this.dialogue = dialogue;
     this.npcX = x;
